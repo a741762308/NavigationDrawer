@@ -3,18 +3,22 @@ package com.jsqix.dq.navigation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.jsqix.dq.library.MaterialRefreshLayout;
+import com.jsqix.dq.navigation.adapter.RecyclerViewAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BlankFragment extends Fragment {
-    private TextView text;
-
+    private MaterialRefreshLayout refreshLayout;
+    private RecyclerView mRecyclerView;
 
     public BlankFragment() {
         // Required empty public constructor
@@ -26,9 +30,17 @@ public class BlankFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
-        text = (TextView) view.findViewById(R.id.textView);
-//        text.setText(getArguments().getString("position", "0"));
+        refreshLayout = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        refreshLayout.setNormalStyle(true);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
+        mRecyclerView.setAdapter(new RecyclerViewAdapter(getActivity()));
     }
 
 }

@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headView = navigationView.getHeaderView(0);
+        headView.findViewById(R.id.imageView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BlankActivity.class));
+            }
+        });
+
         initViewPager();
     }
 
