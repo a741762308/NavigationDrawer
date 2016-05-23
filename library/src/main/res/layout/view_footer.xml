@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/load_more"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal">
@@ -8,7 +9,7 @@
 
     <ProgressBar
         android:id="@+id/load_more_pb"
-        style="?android:attr/progressBarStyleLarge"
+        style="?android:attr/progressBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp" />
@@ -19,7 +20,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="正在加载..."
-        android:textSize="18sp" />
+        android:text="正在加载..." />
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import com.jsqix.dq.navigation.R;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private Context mContext;
+    private int mCount = 2;
 
     public RecyclerViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -31,7 +32,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mCount;
+    }
+
+    public void setmCount(int mCount) {
+        this.mCount = mCount;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,4 +47,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mView = view;
         }
     }
+
 }

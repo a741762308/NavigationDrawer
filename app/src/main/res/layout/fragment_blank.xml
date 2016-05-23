@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jsqix.dq.library.MaterialRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.jsqix.dq.navigation.view.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refresh"
@@ -13,5 +13,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="match_parent" />
-</com.jsqix.dq.library.MaterialRefreshLayout>
+</com.jsqix.dq.navigation.view.RefreshLayout>
