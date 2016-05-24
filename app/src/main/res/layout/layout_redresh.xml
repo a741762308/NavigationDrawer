@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
 
-        <ScrollView
+        <com.jsqix.dq.navigation.view.ScrollerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
@@ -55,7 +55,7 @@
                     android:layout_height="100dp"
                     android:layout_marginTop="10dp" />
             </LinearLayout>
-        </ScrollView>
+        </com.jsqix.dq.navigation.view.ScrollerView>
 
 
     </com.jsqix.dq.navigation.view.RefreshLayout>

@@ -21,6 +21,7 @@ import com.jsqix.dq.navigation.R;
 public class RefreshLayout extends SwipeRefreshLayout {
     private RecyclerView recyclerView;
     private ScrollView scrollView;
+    private ScrollerView scrollerView;
     private View mFootView;
     private PullLoadMoreListener mPullLoadMoreListener;
     private boolean hasMore = true;
@@ -58,14 +59,21 @@ public class RefreshLayout extends SwipeRefreshLayout {
                     removeView(getChildAt(i));
                     layout.addView(recyclerView, lp2);
                 } else if (getChildAt(i) instanceof ScrollView) {
-                    scrollView = (ScrollView) getChildAt(i);
-                    removeView(getChildAt(i));
-                    layout.addView(scrollView, lp2);
+                    try {
+                        scrollerView = (ScrollerView) getChildAt(i);
+                        removeView(getChildAt(i));
+                        layout.addView(scrollerView, lp2);
+                    } catch (Exception e) {
+                        scrollView = (ScrollView) getChildAt(i);
+                        removeView(getChildAt(i));
+                        layout.addView(scrollView, lp2);
+                    }
+
                 }
             }
 
         }
-        if (recyclerView == null && scrollView == null) {
+        if (recyclerView == null && scrollView == null && scrollerView == null) {
             throw new IllegalArgumentException("layout must contain scrollView or recyclerView");
         }
         addView(layout, lp0);
@@ -94,6 +102,19 @@ public class RefreshLayout extends SwipeRefreshLayout {
                 }
             });
         }
+        if (scrollerView != null) {
+            scrollerView.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (isRefresh || isLoadMore) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            });
+            scrollerView.setListener(new ScrollViewOnscroll());
+        }
         setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -103,6 +124,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
                 }
             }
         });
+        setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
     }
 
     @Override
@@ -133,7 +155,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
                             setPullRefreshEnable(false);
                         }
                     } else if (deltaY < 0) {
-                        System.out.println("getMeasuredHeight="+child.getMeasuredHeight()+"\tgetHeight="+scrollView.getHeight()+"\tgetScrollY="+scrollView.getScrollY());
+                        System.out.println("getMeasuredHeight=" + child.getMeasuredHeight() + "\tgetHeight=" + scrollView.getHeight() + "\tgetScrollY=" + scrollView.getScrollY());
                         if (child.getMeasuredHeight() <= scrollView.getHeight() + scrollView.getScrollY()) {//加载
                             setPullRefreshEnable(false);
                             setIsLoadMore(true);
@@ -226,6 +248,27 @@ public class RefreshLayout extends SwipeRefreshLayout {
         public void onRefresh();
 
         public void onLoadMore();
+    }
+
+    class ScrollViewOnscroll implements ScrollerView.OnBorderListener {
+
+        @Override
+        public void onBottom() {
+            setIsLoadMore(true);
+            loadMore();
+        }
+
+        @Override
+        public void onTop() {
+            if (!isLoadMore()) {
+                setPullRefreshEnable(true);
+            }
+        }
+
+        @Override
+        public void onScrollChanged(int l, int t, int oldl, int oldt) {
+            setPullRefreshEnable(false);
+        }
     }
 
     class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
