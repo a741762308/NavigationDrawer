@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         headView.findViewById(R.id.imageView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, BlankActivity.class));
+                startActivity(new Intent(MainActivity.this, ScrollingActivity.class));
             }
         });
 
