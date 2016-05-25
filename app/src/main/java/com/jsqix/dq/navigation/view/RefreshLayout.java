@@ -78,41 +78,30 @@ public class RefreshLayout extends SwipeRefreshLayout {
         }
         addView(layout, lp0);
 
+        View content = null;
+        if (recyclerView != null) {
+            content = recyclerView;
+        } else if (scrollView != null) {
+            content = scrollView;
+        } else if (scrollerView != null) {
+            content = scrollerView;
+        }
+        if (content != null) {
+            content.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (isRefresh || isLoadMore) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
         if (recyclerView != null) {
             recyclerView.addOnScrollListener(new RecyclerViewOnScroll());
-            recyclerView.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (isRefresh || isLoadMore) {
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
-        if (scrollView != null) {
-            scrollView.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (isRefresh || isLoadMore) {
-                        return true;
-                    }
 
-                    return false;
-                }
-            });
         }
         if (scrollerView != null) {
-            scrollerView.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (isRefresh || isLoadMore) {
-                        return true;
-                    }
-
-                    return false;
-                }
-            });
             scrollerView.setListener(new ScrollViewOnscroll());
         }
         setOnRefreshListener(new OnRefreshListener() {

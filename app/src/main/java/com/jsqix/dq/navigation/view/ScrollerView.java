@@ -30,7 +30,7 @@ public class ScrollerView extends ScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         if (listener != null) {
-            if (t + getHeight() >= computeVerticalScrollRange()) {
+            if ((t + getHeight() >= computeVerticalScrollRange()) || (getChildAt(0).getMeasuredHeight() <= getHeight() + getScrollY())) {
                 listener.onBottom();
             } else if (getScrollY() == 0) {
                 listener.onTop();
